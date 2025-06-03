@@ -1,0 +1,8 @@
+version: "3"
+agent:
+    authtoken: 2x8WQy60XJI9chIaXoBlA73BXK5_4DhkmR3crnvQu8Z8DNS65
+tunnels:
+  flask:
+    proto: http
+    addr: 5000
+    domain: gentle-seal-partially.ngrok-free.app
