@@ -26,7 +26,7 @@ export MM_SKIP_SPLASHSCREEN="true"
 export RUN_IN_BACKGROUND="true"
 export HOME="/home/pi"
 curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh -o /tmp/mm_install.sh
-bash /tmp/mm_install.sh -- yes auto auto auto n
+yes "n" | bash /tmp/mm_install.sh -- yes auto auto auto
 
 # Install Mediamtx dependencies
 echo "Installing MediaMTX dependencies..."
