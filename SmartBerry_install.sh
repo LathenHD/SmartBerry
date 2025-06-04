@@ -1,20 +1,25 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 LOGFILE="/home/pi/smartberry-install.log"
 exec > >(tee -a "$LOGFILE") 2>&1
 
 echo "=== Starting SmartBerry Setup ==="
+echo "Log started on $(date)"
 
 # Update & Upgrade
 echo "Updating and upgrading system..."
 sudo apt-get update -y && sudo apt-get upgrade -y
 
-# Clone SmartBerry repo
-echo "Cloning SmartBerry repository..."
-git clone https://github.com/LathenHD/SmartBerry.git /home/pi/SmartBerry
+# Clone SmartBerry repo if not already present
+if [ ! -d "/home/pi/SmartBerry" ]; then
+  echo "Cloning SmartBerry repository..."
+  git clone https://github.com/LathenHD/SmartBerry.git /home/pi/SmartBerry
+else
+  echo "SmartBerry repository already exists. Skipping clone."
+fi
 
-# Install MagicMirror
-echo "Installing MagicMirror..."
+# Install MagicMirror with non-interactive pm2 response
+export MM_USE_PM2=n
 bash -c "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh)" non-interactive
 
 # Install Mediamtx dependencies
@@ -33,6 +38,11 @@ echo "Installing Flask..."
 sudo apt-get install python3-pip -y
 sudo apt-get install python3-flask -y
 
+# Copy Flask server script
+echo "Setting up Flask server script..."
+sudo mkdir -p /opt/flask-server
+sudo cp /home/pi/SmartBerry/flask-server/flask_server.py /opt/flask-server/
+
 # Install Ngrok
 echo "Installing Ngrok..."
 curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null
@@ -43,6 +53,16 @@ sudo apt-get install ngrok -y
 # Add Ngrok Auth Token
 echo "Adding Ngrok auth token..."
 ngrok config add-authtoken 2x8WQy60XJI9chIaXoBlA73BXK5_4DhkmR3crnvQu8Z8DNS65
+
+# Copy ngrok.yml config file
+echo "Setting up Ngrok configuration..."
+mkdir -p /home/pi/.config/ngrok
+cp -f /home/pi/SmartBerry/Ngrok/ngrok.yml /home/pi/.config/ngrok/
+
+# Copy launch_vlc_sh script
+echo "Copying VLC launch script..."
+cp /home/pi/SmartBerry/Scripts/launch_vlc_sh /home/pi/
+chmod +x /home/pi/launch_vlc_sh
 
 # Copy and enable systemd service files
 echo "Copying and enabling service files..."
