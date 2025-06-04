@@ -1,0 +1,13 @@
+[Unit]
+Description=Flask Trigger Server
+After=network.target
+
+[Service]
+User=pi
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
+WorkingDirectory=/opt/flask-server
+ExecStart=/usr/bin/python3 /opt/flask-server/flask_server.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
