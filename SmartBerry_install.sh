@@ -18,9 +18,15 @@ else
   echo "SmartBerry repository already exists. Skipping clone."
 fi
 
-# Install MagicMirror with non-interactive pm2 response
-export MM_USE_PM2=n
-bash -c "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh)" -- yes auto auto auto n
+# Install MagicMirror non-interactively
+echo "Installing MagicMirror non-interactively..."
+export MM_USE_PM2="n"
+export MM_ALLOW_ROOT="true"
+export MM_SKIP_SPLASHSCREEN="true"
+export RUN_IN_BACKGROUND="true"
+export HOME="/home/pi"
+curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh -o /tmp/mm_install.sh
+bash /tmp/mm_install.sh -- yes auto auto auto n
 
 # Install Mediamtx dependencies
 echo "Installing MediaMTX dependencies..."
