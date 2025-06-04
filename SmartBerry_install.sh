@@ -20,7 +20,7 @@ fi
 
 # Install MagicMirror with non-interactive pm2 response
 export MM_USE_PM2=n
-bash -c "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh)" non-interactive
+bash -c "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh)" -- yes auto auto auto n
 
 # Install Mediamtx dependencies
 echo "Installing MediaMTX dependencies..."
@@ -29,8 +29,8 @@ sudo apt-get install libfreetype6 libcamera0 -y
 # Create and copy MediaMTX files
 echo "Setting up MediaMTX binaries and config..."
 sudo mkdir -p /opt/mediamtx
-sudo cp /home/pi/SmartBerry/MediamXL/mediamtx /opt/mediamtx/
-sudo cp /home/pi/SmartBerry/MediamXL/mediamtx.yml /opt/mediamtx/
+sudo cp /home/pi/SmartBerry/Mediamtx/mediamtx /opt/mediamtx/
+sudo cp /home/pi/SmartBerry/Mediamtx/mediamtx.yml /opt/mediamtx/
 sudo chmod +x /opt/mediamtx/mediamtx
 
 # Install Flask
