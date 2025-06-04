@@ -67,8 +67,8 @@ cp -f /home/pi/SmartBerry/Ngrok/ngrok.yml /home/pi/.config/ngrok/
 
 # Copy launch_vlc_sh script
 echo "Copying VLC launch script..."
-cp /home/pi/SmartBerry/Scripts/launch_vlc_sh /home/pi/
-chmod +x /home/pi/launch_vlc_sh
+cp /home/pi/SmartBerry/Scripts/launch_vlc_stream.sh /home/pi/
+chmod +x /home/pi/launch_vlc_stream.sh
 
 # Copy and enable systemd service files
 echo "Copying and enabling service files..."
